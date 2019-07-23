@@ -1,26 +1,20 @@
 from flask import Flask, request
-import json
 from my_token import token
 import requests
 from flask_sslify import SSLify
 from datetime import datetime
 from kittens import get_random_cat
+from weather import msc_weather
 
 app = Flask(__name__)
 sslify = SSLify(app)
 
 '''
-def write_js(data, fname='response.json'):
-    with open(fname, 'w') as f:
-        json.dump(data, f, indent=2)
-
-'''
-'''
 prox = {'https' :  '195.122.185.95:3128',
         'SOCKS5' : '139.59.169.246:1080'
  }
  '''
-greetings = ['привет', 'хай', 'хелло', 'hello', 'hi', 'дратути', 'здравствуй','hey']
+greetings = ['привет', 'хай', 'хелло', 'hello', 'hi', 'дратути', 'здравствуй', 'hey', 'прив', 'здравствуйте', 'приветик']
 
 class Bot():
     
@@ -57,6 +51,8 @@ def resp():
             my_bot.send_message(chat_id, get_random_cat())
         elif message.lower() in greetings:
             my_bot.send_message(chat_id, 'Дратути!')
+        elif message.lower() == 'погода':
+            my_bot.send_message(chat_id, msc_weather())
         else:
             my_bot.send_message(chat_id, 'Я не понял(((')
         log_message = 'В {} {} написал(а) {}'.format(time.strftime("%Y-%m-%d %H:%M:%S"), user, message)
