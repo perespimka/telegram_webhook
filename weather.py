@@ -13,14 +13,9 @@ def msc_weather():
     data = get_weather()
     temp = round(data['main']['temp'])
     hum = data['main']['humidity']
-    press = round(data['main']['pressure'] / 1.33)
+    press = round(data['main']['pressure'] / 1.333)
     desc = data['weather'][0]['description']
 
-    return 'Температура в Москве {} C, влажность {} %, давление {} мм рт.ст. {}'.format(temp, hum, press, desc)
-'''
-with open ('test2.txt', 'w') as f:
-    json.dump(get_weather(), f, indent=2, ensure_ascii=False)
-'''
+    return 'Температура в Москве {} C, влажность {} %, давление {} мм рт.ст., {}'.format(temp, hum, press, desc)
 
-print(msc_weather())
  

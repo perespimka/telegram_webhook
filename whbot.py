@@ -6,6 +6,7 @@ from datetime import datetime
 from kittens import get_random_cat
 from weather import msc_weather
 import re
+from translator import translate
 
 app = Flask(__name__)
 sslify = SSLify(app)
@@ -55,10 +56,17 @@ def resp():
         message = r['message']['text']
         time = datetime.fromtimestamp(r['message']['date'])
         user = r['message']['from']['first_name']
-        command = my_bot.check_command(message.lower())
-
-        if message.lower() in greetings:
+        mess_low = message.lower()
+        command = my_bot.check_command(mess_low)
+        
+        if mess_low in greetings:
             my_bot.send_message(chat_id, 'Дратути!')
+        elif mess_low.startswith('/t'):
+            if mess_low[2] == ' ':
+                my_bot.send_message(chat_id, translate(message[3:]))
+            else:
+                my_bot.send_message(chat_id, translate(message[2:]))
+
         elif command in commands:
             my_bot.send_message(chat_id, commands[command]())
         else:
